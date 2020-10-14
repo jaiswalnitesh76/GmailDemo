@@ -3,6 +3,7 @@ package com.example.gmaildemo.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.HapticFeedbackConstants;
@@ -22,10 +23,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.gmaildemo.R;
 import com.example.gmaildemo.activity.InboxActivity;
+import com.example.gmaildemo.activity.InboxContentActivity;
 import com.example.gmaildemo.helper.CircleTransform;
 import com.example.gmaildemo.helper.FlipAnimator;
 import com.example.gmaildemo.model.Message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +45,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     // index is used to animate only the selected row
     // dirty fix, find a better solution
     private static int currentSelectedIndex = -1;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         public TextView from, subject, message, iconText, timestamp;
@@ -92,6 +96,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
         Message message = messages.get(position);
 
         // displaying text view data
@@ -120,6 +125,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
         // apply click events
         applyClickEvents(holder, position);
+        mContext = holder.messageContainer.getContext();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, InboxContentActivity.class);
+                i.putExtra("maasage", String.valueOf(messages.get(position)));
+
+                mContext.startActivity(i);
+            }
+        });
+
     }
 
     private void applyClickEvents(MyViewHolder holder, final int position) {

@@ -184,11 +184,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onIconClicked(int position) {
-        if (actionMode == null) {
+       /* if (actionMode == null) {
             actionMode = startSupportActionMode((androidx.appcompat.view.ActionMode.Callback) actionModeCallback);
         }
 
-        toggleSelection(position);
+        toggleSelection(position);*/
     }
 
     @Override
